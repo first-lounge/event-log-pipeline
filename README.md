@@ -1,1 +1,1 @@
-# event-log-pipeline
+# 이벤트 로그 파이프라인 과제
