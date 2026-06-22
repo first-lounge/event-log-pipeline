@@ -17,7 +17,8 @@
 
 ## 1. 개요 및 아키텍처
 
-원본을 먼저 보존한 뒤 정규화하는 **ELT 기반 파이프라인** 생성기가 만든 이벤트를 `raw_events`에 원본 그대로 적재(Load)한 뒤, 검증·정규화(Transform)해 분석용 테이블로 옮깁니다.
+- 원본을 먼저 보존한 뒤 정규화하는 **ELT 기반 파이프라인**
+- 생성기가 만든 이벤트를 `raw_events`에 원본 그대로 적재(Load)한 뒤, 검증·정규화(Transform)해 분석용 테이블로 옮깁니다.
 
 ```
 [이벤트 생성기]              가짜 이벤트 생성 (Faker)
@@ -29,7 +30,7 @@
 [events + 상세 이벤트]          
       │  집계 SQL 
       ▼
-[Grafana]                   시각화 · Postgres 데이터소스
+[Grafana] 시각화
 ```
 
 ---
@@ -59,7 +60,7 @@ docker compose up -d --build
 
 ### 3.2 시각화 확인
 
-- **Grafana 대시보드**: http://localhost:3000 (익명 접근 허용, 별도 로그인 불필요)
+- **Grafana 대시보드**: http://localhost:3000 (별도 로그인 불필요)
 
 ---
 
@@ -131,7 +132,7 @@ docker compose up -d --build
 
 ## 5. 분석 쿼리
 
-집계 쿼리는 Grafana 패널로 활용됩니다. (쿼리 원본: `db/.sql` 또는 대시보드 JSON)
+집계 쿼리는 Grafana 패널로 활용됩니다. (쿼리 원본: `db/aggregate.sql` 또는 대시보드 JSON)
 
 | #   | 분석                      | 종류         |
 | --- | ------------------------- | ------------ |
