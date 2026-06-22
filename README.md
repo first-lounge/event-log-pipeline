@@ -148,7 +148,7 @@ docker compose up -d --build
 ![](./img/dashboard.png)
 
 - Postgres 데이터소스 + 대시보드를 **프로비저닝**으로 자동 구성 (`grafana/provisioning/`)
-- `docker compose up`만으로 데이터소스 연결 + 대시보드가 자동 로드됨
+- `docker compose up`만으로 데이터소스 연결 + 대시보드가 자동 로드됩니다.
 
 ---
 
@@ -157,21 +157,19 @@ docker compose up -d --build
 ### 7.1 ELT 파이프라인 구조
 
 - 로그 데이터는 원본이 훼손되지 않는 것이 중요하다고 생각하여, 원본을 먼저 보존한 뒤 정규화하는 구조로 설계했습니다.
-- 생성기가 만든 이벤트를 `raw_events`에 원본 그대로 적재(Load)한 뒤, 검증·정규화(Transform)해 분석용 테이블로 옮깁니다.
-- 또한 변환 로직이 바뀌거나 버그가 생겨도 원본이 남아 있어 다시 변환(replay)할 수 있습니다.
+- 생성기가 만든 이벤트를 `raw_events`에 원본 그대로 적재한 뒤, 검증·정규화해 분석용 테이블로 옮깁니다.
+- 또한 변환 로직이 바뀌거나 버그가 생겨도 원본이 남아 있어 다시 변환할 수 있습니다.
 
 ### 7.2 멱등성
 
 - 중복 데이터가 들어오거나 INSERT가 실패해도 안전하게 재처리되도록 설계했습니다.
 - INSERT와 `processed_at` 갱신을 **한 트랜잭션**으로 묶어, 중간에 실패하면 롤백되어 `processed_at`이 NULL로 남으므로 안전하게 재처리됩니다.
-- 재처리 시에도 `WHERE processed_at IS NULL`로 미처리 건만 고르고, `ON CONFLICT DO NOTHING`으로 중복 적재를 막아 여러 번 실행해도 결과가 동일합니다(멱등).
+- 재처리 시에도 `WHERE processed_at IS NULL`로 미처리 건만 고르고, `ON CONFLICT DO NOTHING`으로 중복 적재를 막아 여러 번 실행해도 결과가 동일합니다.
 
 ### 7.3 Batch INSERT
 
 - 현재 기본 생성 개수는 1,000개이지만, 추후 대용량 데이터를 고려하여 batch 단위로 insert되도록 했습니다.
 - 한 건씩 INSERT하면 DB 왕복이 많아 느려지므로, 여러 행을 한 번의 쿼리로 묶어 보내는 `execute_values`를 사용해 왕복을 줄였습니다.
-
-<!-- ▶ (시간 되면 추가) 환경변수로 DB 접속정보 분리(.env gitignore + .env.example) / 에러 모델을 HTTP 상태코드로 정한 이유 -->
 
 ---
 
