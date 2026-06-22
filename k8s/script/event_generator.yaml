@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: generate-events
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: db-healthcheck
+          image: postgres:16-alpine
+          command:
+            - sh
+            - -c
+            - |
+              until pg_isready -h postgres-svc -p 5432 -U master
+              do 
+                echo "waiting for postgres...";
+                sleep 2;
+              done
+      containers:
+        - name: pipeline
+          image: leehojae/pipeline:latest
+          env:
+            - name: SIZE
+              value: "50000"
+          envFrom:
+            - secretRef:
+                name: db-secret
+          resources:
+            requests:
+              cpu: 100m
+              memory: "128Mi"
+            limits:
+              cpu: 500m
+              memory: "512Mi"
+      restartPolicy: Never
