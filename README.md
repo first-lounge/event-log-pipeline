@@ -99,11 +99,11 @@ raw_events ──(변환)──▶ events ──┬─ (page_view: 상세 없음
 
 | 컬럼         | 타입         | Null   | 설명                           |
 | ------------ | ------------ | ------ | ------------------------------ |
-| `event_id`   | UUID         | N (PK) | 이벤트 ID — 상세가 참조        |
+| `event_id`   | UUID         | N (PK) | 이벤트 ID                      |
 | `event_type` | ENUM         | N      | page_view/purchase/error/click |
-| `user_id`    | INTEGER      | N      | 유저 ID (내부 식별)            |
+| `user_id`    | INTEGER      | N      | 유저 ID                        |
 | `event_time` | TIMESTAMPTZ  | N      | 이벤트 발생 시각(UTC)          |
-| `page_name`  | VARCHAR(100) | N      | 발생 페이지(논리 식별자)       |
+| `page_name`  | VARCHAR(100) | N      | 발생 페이지                    |
 | `device`     | VARCHAR(50)  | N      | 발생 기기                      |
 
 ### purchase
@@ -138,7 +138,7 @@ raw_events ──(변환)──▶ events ──┬─ (page_view: 상세 없음
 
 ## 5. 분석 쿼리
 
-집계 쿼리는 Grafana 패널로 재활용된다. (쿼리 원본: `sql/` 또는 대시보드 JSON)
+집계 쿼리는 Grafana 패널로 활용됩니다. (쿼리 원본: `db/.sql` 또는 대시보드 JSON)
 
 | #   | 분석                      | 종류         |
 | --- | ------------------------- | ------------ |
@@ -147,8 +147,6 @@ raw_events ──(변환)──▶ events ──┬─ (page_view: 상세 없음
 | 3   | 전체 대비 에러율          | 비율         |
 | 4   | 에러 코드별 비율          | 비율         |
 | 5   | 페이지뷰 TOP N            | 정렬 + LIMIT |
-
-▶ 각 쿼리가 **무엇을 답하는지** 한 줄씩 + 의도 (예: "건강한 서비스는 5xx가 드물어야 하므로 에러율로 상태 점검")
 
 ---
 
