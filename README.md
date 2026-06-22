@@ -53,7 +53,7 @@
 # 1. 환경변수 파일 준비 (.env는 git에 포함되지 않음 / 더미 값이라 수정 없이 바로 실행 가능)
 cp .env.example .env
 
-# 2. 전체 스택 한 방 실행 (DB + 파이프라인 앱 + Grafana)
+# 2. 전체 스택 한 번에 실행 (DB + 파이프라인 앱 + Grafana)
 docker compose up -d --build
 ```
 
