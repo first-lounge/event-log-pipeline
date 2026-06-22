@@ -26,7 +26,7 @@
 [raw_events]                원본 JSONB 보존 · processed_at으로 처리 추적
       │  Transform (검증·정규화, 멱등)
       ▼
-[events + 상세 3종]          공통/타입별 분리(CTI) · 무결성
+[events + 상세 3종]          공통/타입별 분리() · 무결성
       │  집계 SQL (Step 3)
       ▼
 [Grafana]                   시각화 · Postgres 데이터소스
@@ -80,10 +80,10 @@ raw_events ──(변환)──▶ events ──┬─ (page_view: 상세 없음
                                 └─▶ click
 ```
 
-### 설계 이유 (supertype-subtype / CTI)
+### 설계 이유
 
 - 이벤트별로 응답받는 필드가 달라 이를 구분할 필요가 있었습니다.
-- 조회 시 JOIN 비용과 쓰기 시 트랜잭션 복잡도를 감수하더라도, 타입별 필드 무결성(NOT NULL 등)을 DB 레벨에서 강제하고 NULL을 없애기 위해 공통/타입별 테이블을 분리(supertype-subtype)했습니다.
+- 조회 시 JOIN 비용과 쓰기 시 트랜잭션 복잡도를 감수하더라도, 타입별 필드 무결성(NOT NULL 등)을 DB 레벨에서 강제하고 NULL을 없애기 위해 공통/타입별 테이블을 분리했습니다.
 
 ### 테이블별 컬럼
 
