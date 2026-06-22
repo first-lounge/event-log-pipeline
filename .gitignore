@@ -1,0 +1,4 @@
+docs
+venv
+script/__pycache__
+.env
