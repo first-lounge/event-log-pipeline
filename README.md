@@ -21,13 +21,13 @@
 
 ```
 [이벤트 생성기]              가짜 이벤트 생성 (Faker)
-      │  Load (execute_values 배치 INSERT)
+      │  Load (배치 INSERT)
       ▼
-[raw_events]                원본 JSONB 보존 · processed_at으로 처리 추적
+[raw_events]                원본 JSONB 보존
       │  Transform (검증·정규화, 멱등)
       ▼
-[events + 상세 3종]          공통/타입별 분리() · 무결성
-      │  집계 SQL (Step 3)
+[events + 상세 이벤트]          
+      │  집계 SQL 
       ▼
 [Grafana]                   시각화 · Postgres 데이터소스
 ```
