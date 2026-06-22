@@ -24,6 +24,7 @@ services:
       dockerfile: script/Dockerfile
     restart: "no"
     container_name: event_generator
+    command: ["python", "main.py", "--size", "${SIZE:-10000}"]
     env_file:
       - .env
     depends_on:
