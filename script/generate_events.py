@@ -73,7 +73,7 @@ def generate(size):
     tmp["event_type"] = random.choices(event_types, weights=[45, 35, 15, 5], k=1)[0]
     tmp["user_id"] = random.randint(1, 1000)
     tmp["event_time"] = fake.date_time_between(start_date='-1y', end_date='-1d', tzinfo=UTC).isoformat()
-    tmp["page_name"] = random.choice(page_name)
+    tmp["page_name"] = random.choices(page_name, weights=[30, 20, 25, 40, 35, 5], k=1)[0]
     tmp["device"] = random.choice(device)
     payload.append(tmp)
 
