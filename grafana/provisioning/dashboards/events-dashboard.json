@@ -545,7 +545,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "이벤트 타입별 발생 횟수",
+  "title": "데이터 집계 시각화",
   "uid": "ghgjt4",
   "version": 1
 }
