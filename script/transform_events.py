@@ -2,8 +2,7 @@ from psycopg2.extras import execute_values
 import psycopg2
 import sys
 
-def insert_events():
-    DB = dict(host="localhost", port=5432, dbname="events", user="master", password="master")
+def insert_events(DB: dict):
     conn = psycopg2.connect(**DB)
     data = None
 

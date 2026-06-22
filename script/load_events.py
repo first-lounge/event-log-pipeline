@@ -2,10 +2,8 @@ from psycopg2.extras import execute_values
 import psycopg2
 import json
 import sys
-import timeit
 
-def insert_raw(data):
-    DB = dict(host="localhost", port=5432, dbname="events", user="master", password="master")    
+def insert_raw(data, DB: dict):
     conn = psycopg2.connect(**DB)
     query = """
             INSERT INTO raw_events (event_id, payload)
