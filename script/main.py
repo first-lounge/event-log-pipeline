@@ -7,7 +7,7 @@ import os
 
 def main():
     parser = argparse.ArgumentParser(description="이벤트 생성기 스크립트")
-    parser.add_argument("-s", "--size", type=int, default=10000, help="생성할 데이터 개수")
+    parser.add_argument("-s", "--size", type=int, default=os.getenv("SIZE", 10000), help="생성할 데이터 개수")
     args = parser.parse_args()
 
     DB = dict(
