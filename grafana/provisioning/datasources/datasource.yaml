@@ -1,0 +1,14 @@
+apiVersion: 1
+
+datasources:
+  - name: Postgres
+    type: postgres
+    uid: pg-events
+    url: db:5432
+    user: master
+    secureJsonData:
+      password: master
+    jsonData:
+      database: events
+      sslmode: disable
+      postgresVersion: 1600 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
